@@ -1,7 +1,7 @@
-function selfeatures = FeaturesSelector(varargin)
+function output = FeaturesSelector(varargin)
  %FEATURESSELECTOR Launcher for the features selection user interface
     % 
-    %   INDEX = FeaturesSelector(DATA, CLASSES, RUNS) creates an user
+    %   OUTPUT = FeaturesSelector(DATA, CLASSES, RUNS) creates an user
     %   interface for features selection. DATA is a 3D array [S x N x M]
     %   where the first dimension S represents the observations, N and M
     %   two features dimensions. CLASSES and RUNS are 1-dimension vector
@@ -17,12 +17,14 @@ function selfeatures = FeaturesSelector(varargin)
     %   plot the projection of the selected features in the canonical space
     %   is shown.
     %
-    %   Once the interface is closed, the INDEX of the selected features
-    %   are returned. Notice that INDEX refer to the linear combination of
-    %   the two input dimensions of DATA. To determine the index of each
-    %   feature dimension, please use ind2sub function.
+    %   Once the interface is closed, the index of the selected features
+    %   are returned in the OUTPUT structure. Notice that index refer to 
+    %   the linear combination of the two input dimensions of DATA. To 
+    %   determine the index of each feature dimension, please use ind2sub 
+    %   function. Furthermore, in the OUTPUT structure are also stored the
+    %   indexes of the runs included in the analysis.
     %   
-    %   INDEX = UIFeaturesSelector(..., 'PropertyName', PropertyValue) sets
+    %   OUTPUT = UIFeaturesSelector(..., 'PropertyName', PropertyValue) sets
     %   the properties of the user interface. In particular, it is possible
     %   to set the following properties:
     %      'XLabel'           The name for the x-axis of the maps 
@@ -44,8 +46,8 @@ function selfeatures = FeaturesSelector(varargin)
     %                         the discriminancy dp and the 
     %                         projection tf into the canonical 
     %                         space 
-    %      'SelectedFeatures' The feaures currently selected in 
-    %                         the interface
+    %      'UserData'         The indexes of the selected feaures and of 
+    %                         the included runs.
     %   
     %   To use the interface within a script, launch it throught the
     %   function FeaturesSelector
@@ -55,7 +57,7 @@ function selfeatures = FeaturesSelector(varargin)
 
     waitfor(app, 'IsClosed', true);
     if(isvalid(app))
-        selfeatures = app.SelectedFeatures;
+        output = app.UserData;
     end
 
     delete(app);
